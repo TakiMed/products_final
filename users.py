@@ -34,6 +34,40 @@ class User(Resource):
             return dumps(new_user), 201
         except Exception as e:
             return {"error": str(e)}, 400
+    def put(self,username):
+        try:
+            request_data = request.get_json()
+            user = list(mycolu.find({"username": username}))
+            parser = reqparse.RequestParser()
+            is_required = False
+            if not user:
+                is_required = True
+            else:
+                user = user[0]
+            parser.add_argument("username", type=str, required=is_required)
+            parser.add_argument("email", type=str, required=is_required)
+            parser.add_argument("password", type=str, required=is_required)
+            parser.add_argument("role", type=int, required=is_required)
+            parser.add_argument("product", type=list, required=is_required)
+            request_data = parser.parse_args()
+            
+            new_user = {
+                "username":request_data["username"] if request_data["username"] else user["username"],
+                "password":request_data["password"] if request_data["password"] else user["password"],
+                "email":request_data["email"] if request_data["email"] else user["email"],
+                "role":request_data["role"] if request_data["role"] else user["role"],
+                "product":request_data["product"] if request_data["product"] else user["product"],
+            }
+            
+            if not user:
+                mycolu.insert_one(new_user)
+                return dumps(new_user), 201
+            else:
+                mycolu.update_one({"username": username}, {"$set": new_user})
+                return {"message": "Updated"}, 200
+
+        except Exception as e:
+            return {"error": str(e)}, 400
     
     #@jwt_required()
     def delete(self, username):

@@ -5,8 +5,8 @@ from bson.json_util import dumps
 import pymongo
 import bson
 from bson.objectid import ObjectId
-#from flask_jwt import JWT, jwt_required
-#from security import identity, authenticate
+from flask_jwt import JWT, jwt_required
+from security import identity, authenticate
 import csv
 from config import mydb,mycolp,mycolu
 import json
@@ -21,9 +21,6 @@ from mailing import to_csv, mailing
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj): return json_util.default(obj)
 
-#from werkzeug.security import safe_str_cmp
-
-#jwt = JWT(app, authenticate, identity)
 vvproducts={
       "$jsonSchema": {
             "bsonType": "object",
@@ -110,6 +107,8 @@ if not admin:
 
 app = Flask(__name__)
 api = Api(app)
+jwt = JWT(app, authenticate, identity)
+app.secret_key = "neki_string_koji_ne_smije_da_bude_public"
 app.config['DEBUG']=True
 app.config['TESTING']=False
 app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -153,6 +152,7 @@ def product_dec(name):
         return "You have exceeded the product quantity limit :  " + str(product["quantity"]) + "  pcs."
 
 @app.route('/product_num/<name>',methods=["GET"])
+#@jwt_required()
 def product_num(name):
     product=mycolp.find_one({"name":name})
     return "Quantity in stock  " + str(product["quantity"]) + "  pcs  "+ product["name"]
