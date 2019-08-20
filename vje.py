@@ -250,10 +250,10 @@ def add_product():
                     new_product["quantity"]=int(new_product["quantity"])
                 dumps(new_product)
                 mycolp.insert_one(new_product)
-                return new_product
-                #mailing(new_product,admin)
-                #mycolu.update_one({'username':username},{"$set":{"product":products_id_list}})
-                #return "Added  : " + product_id + "  to user : " + user["username"] + "  and updated in Users and Products."
+                user["product"].append(product_id)
+                mailing(new_product,admin)
+                mycolu.update_one({'username':username},{"$set":{"product":user["product"]}})
+                return "Added  : " + product_id + "  to user : " + user["username"] + "  and updated in Users and Products."
             except Exception as e:
                 return dumps({"error": str(e)})
     elif request.method=='DELETE':
