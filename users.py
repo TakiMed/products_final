@@ -20,7 +20,7 @@ class User(Resource):
             return {"error": str(e)}, 400
 
     #@jwt_required()
-    def post(self, username): 
+    def post(self): 
         try:
             request_data = request.get_json()
             new_user = {

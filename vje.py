@@ -1,3 +1,4 @@
+import re
 from flask import Flask, request, jsonify, render_template
 from flask_mail import Mail, Message
 from flask_restful import Resource, Api, reqparse
@@ -22,6 +23,8 @@ class CustomJSONEncoder(JSONEncoder):
     def default(self, obj): return json_util.default(obj)
 
 vvproducts={
+    
+    
       "$jsonSchema": {
             "bsonType": "object",
             #dodati usera kad dragana napravi, ne znam kako sliku
@@ -129,6 +132,11 @@ api.add_resource(ProductList, "/products")
 api.add_resource(User, "/user/<string:username>")
 api.add_resource(UserList, "/userlist")
 
+@app.route('/user', methods = ["POST"])
+def create_user():
+    return User.post(self=User)
+    
+
 @app.route('/product_inc/<name>',methods=["POST"])
 def product_inc(name):
     product=mycolp.find_one({"name":name})
@@ -147,7 +155,7 @@ def product_dec(name):
         decremented=product["quantity"]-1
         newvalues = { "$set": { "quantity": decremented } }
         mycolp.update_one(product, newvalues)
-        return "Quantity in stock  " + str(mycolp.find_one({"name":name})["quantity"]) + "  pcs  "+ product["name"] 
+        return "Quantity in stock  " + str(mycolp.find_one({"name": name})["quantity"]) + "  pcs  "+ product["name"] 
     else:
         return "You have exceeded the product quantity limit :  " + str(product["quantity"]) + "  pcs."
 
@@ -225,10 +233,11 @@ def product_group():
 
 @app.route('/add_product',methods=["GET","PUT","POST","DELETE"])
 def add_product():
-    username=request.args.get('username','')
+    username=request.args.get('user')
     product_id=request.args.get('id','')
     user=mycolu.find_one({"username":username})
-    products_id_list=user["product"]
+    print(user)
+    products_id_list=[]
     if request.method=='POST':
         #PRVO PROVJERAVAM DA LI JE TAJ PROIZVOD VEC KREIRAN OD STRANE NEKOG DRUGOG USERA
         for product in mycolp.find():
@@ -279,4 +288,4 @@ def max_profit(username):
     return "Maximum possible profit from products created by user is :"+ str(profit(username))
     
 
-#app.run()
+app.run(debug=True, port=1000)

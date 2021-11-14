@@ -70,6 +70,7 @@ class Product(Resource):
                 return {"message": "Updated"}, 200
         except Exception as e:
             return {"error": str(e)}, 400
+    
     #@jwt_required()
     def delete(self,name):
         try:
@@ -80,6 +81,7 @@ class Product(Resource):
                 return {"message": "Product with this name not found."}, 404
         except Exception as e:
             return {"error": str(e)}, 400
+
 class ProductList(Resource):
     def get(self):
         try:
