@@ -1,10 +1,5 @@
-import pymongo
-import json
-from config import mydb,mycolp,mycolu
-from users import User,UserList
-from products import Product,ProductList
+from .config import mycolp,mycolu
 import bson
-from bson.objectid import ObjectId
 
 
 
