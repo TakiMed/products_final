@@ -282,4 +282,35 @@ def max_profit(username):
 
 @app.route('/')
 def index():
-    return "<h1> WELLCOME TO PRODUCTS APP </h1> </br ><h2> routes: </h2>" + "</br ><h3> /products </h3>"
+    return "<h1> WELLCOME TO PRODUCTS APP </h1> </br ><h2> routes: </h2>" 
+    + "</br><p>"
+    + "<h3>/add_product, methods=[GET,POST,PUT,DELETE]</h3>"
+    + "<h3>/product_id/<string:id>, methods=[GET,PUT,DELETE]</h3></br>"
+    + "<h3>/product_num/<name>, methods=[GET]</h3></br>"
+    + "<h3>/product/<string:name>, methods=[GET]</h3></br>"
+    + "<h3>/product_inc/<name>, methods=[POST]</h3></br>"
+    + "<h3>/product_dec/<name>, methods=[POST]</h3></br>"
+    + "<h3>/max_profit/<string:username>, methods=[GET]</h3></br>"
+    + "<h3>/product_group, methods=[GET]</h3></br>"
+    + "<h3>/products, methods=[GET]</h3></br>"
+    + "</br>"
+    + "<h3>/user, methods=[GET,POST,PUT,DELETE]</h3></br>"
+    + "<h3>/userlist, methods=[GET]</h3></br>"
+
+
+"""
+/add_product, methods=["GET","POST","PUT","DELETE"]
+/product_id/<string:id>', methods=["GET","PUT","DELETE"]
+/product_num/<name>', methods=["GET"]
+/product/<string:name>, methods=["GET"]
+/product_inc/<name>, methods=["POST"]
+/product_dec/<name>, methods=["POST"]
+/max_profit/<string:username>, methods=["GET"]
+/product_group, methods=["GET"]
+/products, methods=["GET"]
+
+/user, methods=["GET","POST","PUT","DELETE"]
+/userlist, methods=["GET"]
+
+
+"""
