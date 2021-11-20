@@ -2,7 +2,6 @@ from .config import mycolp,mycolu
 import bson
 
 
-
 def profit(username):
     user=mycolu.find_one({"username":username})
     #OVO RADIM DA SE OSIGURAM DA MI SE SLAZU ID-JEVI

@@ -3,28 +3,23 @@ from flask import Flask, request, jsonify, render_template
 from flask_mail import Mail, Message
 from flask_restful import Resource, Api, reqparse
 from bson.json_util import dumps
-import pymongo
 import bson
 from bson.objectid import ObjectId
 from flask_jwt import JWT, jwt_required
 from .security import identity, authenticate
-import csv
 from .config import mydb,mycolp,mycolu
-import json
 from .users import User,UserList
 from .products import Product,ProductList
 from flask.json import JSONEncoder
 from bson import json_util
 from .group import profit
-from .mailing import to_csv, mailing
+from .mailing import mailing
 
 #json Encoder jer nije htio da mi salje id, Typerror:Object of type ObjectId is not JSON serializable
 class CustomJSONEncoder(JSONEncoder):
     def default(self, obj): return json_util.default(obj)
 
-vvproducts={
-    
-    
+vvproducts={ 
       "$jsonSchema": {
             "bsonType": "object",
             #dodati usera kad dragana napravi, ne znam kako sliku
@@ -135,7 +130,6 @@ api.add_resource(UserList, "/userlist")
 @app.route('/user', methods = ["POST"])
 def create_user():
     return User.post(self=User)
-    
 
 @app.route('/product_inc/<name>',methods=["POST"])
 def product_inc(name):
@@ -283,10 +277,9 @@ def add_product():
         return "Product_id list for user  " + user["username"] +  "  updated. Current list:  " + str(user["product"])
 
 @app.route('/max_profit/<string:username>')
-def max_profit(username):
+def max_profit(username): 
     return "Maximum possible profit from products created by user is :"+ str(profit(username))
-    
-app = Flask(__name__)
+
 @app.route('/')
 def index():
-    return "<h1> WELLCOME TO PRODUCTS APP </h1>"
+    return "<h1> WELLCOME TO PRODUCTS APP </h1> </br ><h2> routes: </h2>" + "</br ><h3> /products </h3>"

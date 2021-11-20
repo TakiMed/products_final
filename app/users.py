@@ -7,8 +7,7 @@ from flask_jwt import JWT, jwt_required
 import json
 from .config import mycolu
 
-class User(Resource):
-    
+class User(Resource):   
     def get(self, username):
         try:
             user = list(mycolu.find({"username":username}))
