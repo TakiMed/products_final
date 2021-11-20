@@ -129,7 +129,7 @@ app.json_encoder = CustomJSONEncoder
 api.add_resource(Product, "/product/<string:name>")
 api.add_resource(ProductList, "/products")
 
-api.add_resource(User, "/user/<string:username>")
+api.add_resource(User, "/user")
 api.add_resource(UserList, "/userlist")
 
 @app.route('/user', methods = ["POST"])
